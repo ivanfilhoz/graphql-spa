@@ -6,14 +6,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/lib/auth'
+import { UserQuery } from '@/lib/queries'
 import { cn } from '@/lib/utils'
-import { UserQuery } from '@/queries'
 import { useQuery } from '@apollo/client'
 import { LoaderCircleIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface UserDetailsFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserDetailsForm({ className, ...props }: UserDetailsFormProps) {
+  const { t } = useTranslation()
   const { getUserId, signOut } = useAuth()
   const { loading, error, data } = useQuery(UserQuery, {
     variables: { id: getUserId() },
@@ -36,10 +38,10 @@ export function UserDetailsForm({ className, ...props }: UserDetailsFormProps) {
     return (
       <div className='flex flex-col gap-2'>
         <p className='px-8 text-center text-sm text-muted-foreground'>
-          An error occurred while fetching your details. Please try again later.
+          {t('user_error')}
         </p>
         <Button variant='ghost' className='self-center' onClick={signOut}>
-          Sign Out
+          {t('user_signout')}
         </Button>
       </div>
     )
@@ -47,9 +49,9 @@ export function UserDetailsForm({ className, ...props }: UserDetailsFormProps) {
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <div className='grid gap-2'>
+      <div className='flex flex-col gap-2'>
         <div className='grid gap-1'>
-          <Label htmlFor='email'>First name</Label>
+          <Label htmlFor='email'>{t('user_firstname')}</Label>
           <Input
             id='firstName'
             name='firstName'
@@ -60,7 +62,7 @@ export function UserDetailsForm({ className, ...props }: UserDetailsFormProps) {
           />
         </div>
         <div className='grid gap-1'>
-          <Label htmlFor='lastName'>Last name</Label>
+          <Label htmlFor='lastName'>{t('user_lastname')}</Label>
           <Input
             id='lastName'
             name='lastName'
@@ -74,12 +76,9 @@ export function UserDetailsForm({ className, ...props }: UserDetailsFormProps) {
           <div className='absolute inset-0 flex items-center'>
             <span className='w-full border-t' />
           </div>
-          <div className='relative flex justify-center text-xs uppercase'>
-            <span className='bg-background px-2 text-muted-foreground'>Or</span>
-          </div>
         </div>
         <Button variant='ghost' onClick={signOut}>
-          Sign Out
+          {t('user_signout')}
         </Button>
       </div>
     </div>

@@ -7,23 +7,24 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { useAuth } from '@/lib/auth'
+import { LoginMutation } from '@/lib/queries'
 import { cn } from '@/lib/utils'
-import { LoginMutation } from '@/queries'
 import { useMutation } from '@apollo/client'
 import { LoaderCircleIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const { t } = useTranslation()
   const { toast } = useToast()
   const { signIn } = useAuth()
 
   const [login, { loading }] = useMutation(LoginMutation, {
     onError: () => {
       toast({
-        title: 'Oops!',
-        description:
-          'Could not log in. Please check your credentials and try again.'
+        title: t('login_error_title'),
+        description: t('login_error_description')
       })
     },
     onCompleted: (data) => {
@@ -49,12 +50,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <div className='grid gap-2'>
           <div className='grid gap-1'>
             <Label className='sr-only' htmlFor='email'>
-              Email
+              {t('login_email')}
             </Label>
             <Input
               id='email'
               name='email'
-              placeholder='name@example.com'
+              placeholder={t('login_email_placeholder')}
               type='email'
               autoCapitalize='none'
               autoComplete='email'
@@ -65,12 +66,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
           <div className='grid gap-1'>
             <Label className='sr-only' htmlFor='password'>
-              Password
+              {t('login_password')}
             </Label>
             <Input
               id='password'
               name='password'
-              placeholder='password'
+              placeholder={t('login_password_placeholder')}
               type='password'
               autoCapitalize='none'
               autoCorrect='off'
@@ -82,7 +83,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             {loading && (
               <LoaderCircleIcon className='mr-2 h-4 w-4 animate-spin' />
             )}
-            Continue
+            {t('login_continue')}
           </Button>
         </div>
       </form>

@@ -1,8 +1,11 @@
+import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/toaster'
 import { useAuth } from '@/lib/auth'
+import { useTranslation } from 'react-i18next'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export default function Root() {
+  const { t, i18n } = useTranslation()
   const { getUserId } = useAuth()
   const { pathname } = useLocation()
 
@@ -31,17 +34,35 @@ export default function Root() {
         </div>
         <div className='relative z-20 mt-auto'>
           <blockquote className='space-y-2'>
-            <p className='text-lg'>
-              &ldquo;Good design is as little design as possible. Less, but
-              better - because it concentrates on the essential aspects, and the
-              products are not burdened with non-essentials. Back to purity,
-              back to simplicity.&rdquo;
-            </p>
+            <p className='text-lg'>&ldquo;{t('root_phrase')}&rdquo;</p>
             <footer className='text-sm'>Dieter Rams</footer>
           </blockquote>
         </div>
       </div>
       <div className='lg:p-8'>
+        <div className='absolute top-4 right-4 flex gap-1'>
+          <Button
+            variant='ghost'
+            size='sm'
+            onClick={() => i18n.changeLanguage('en')}
+          >
+            EN
+          </Button>
+          <Button
+            variant='ghost'
+            size='sm'
+            onClick={() => i18n.changeLanguage('pt')}
+          >
+            PT
+          </Button>
+          <Button
+            variant='ghost'
+            size='sm'
+            onClick={() => i18n.changeLanguage('de')}
+          >
+            DE
+          </Button>
+        </div>
         <Outlet />
         <Toaster />
       </div>

@@ -9,6 +9,7 @@ import {
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './globals.css'
+import './lib/i18n'
 
 import { getToken } from '@/lib/auth'
 import Login from './routes/login'
