@@ -80,9 +80,17 @@ export const resources = {
   }
 } as const
 
+export const setLanguageConfig = (language: keyof typeof resources) => {
+  window.localStorage.setItem('lang', language)
+}
+
+export const getLanguageConfig = () => {
+  return window.localStorage.getItem('lang') || 'en'
+}
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en',
+  lng: getLanguageConfig(),
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false

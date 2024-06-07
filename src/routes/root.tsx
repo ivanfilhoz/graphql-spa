@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/toaster'
 import { useAuth } from '@/lib/auth'
+import { resources, setLanguageConfig } from '@/lib/i18n'
 import { useTranslation } from 'react-i18next'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
@@ -11,6 +12,11 @@ export default function Root() {
 
   if (pathname === '/') {
     return getUserId() ? <Navigate to='/user' /> : <Navigate to='/login' />
+  }
+
+  const setLang = (language: keyof typeof resources) => {
+    i18n.changeLanguage(language)
+    setLanguageConfig(language)
   }
 
   return (
@@ -41,27 +47,16 @@ export default function Root() {
       </div>
       <div className='lg:p-8'>
         <div className='absolute top-4 right-4 flex gap-1'>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={() => i18n.changeLanguage('en')}
-          >
-            EN
-          </Button>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={() => i18n.changeLanguage('pt')}
-          >
-            PT
-          </Button>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={() => i18n.changeLanguage('de')}
-          >
-            DE
-          </Button>
+          {Object.keys(resources).map((lang) => (
+            <Button
+              key={lang}
+              variant='ghost'
+              size='sm'
+              onClick={() => setLang(lang as keyof typeof resources)}
+            >
+              {lang.toUpperCase()}
+            </Button>
+          ))}
         </div>
         <Outlet />
         <Toaster />
