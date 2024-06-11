@@ -19,7 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
+    
     /* Alias */
     "baseUrl": ".",
     "paths": {
@@ -33,7 +33,7 @@
         "schema": "https://cms.trial-task.k8s.ext.fcse.io/graphql", 
         "tadaOutputLocation": "./src/graphql-env.d.ts"
       } 
-    ] 
+    ]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
